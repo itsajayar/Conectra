@@ -90,7 +90,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             "Cookie": "SOCS=CAESEwgDEgk0ODE3NTEzNDQaAnVzIAE"
         })
         try:
-           with urllib.request.urlopen(req, timeout=10) as response:
+           with urllib.request.urlopen(req, timeout=20) as response:
                 html = response.read().decode('utf-8')
                 real_url = response.geturl()
 

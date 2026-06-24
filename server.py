@@ -90,11 +90,21 @@ class RequestHandler(BaseHTTPRequestHandler):
             "Cookie": "SOCS=CAESEwgDEgk0ODE3NTEzNDQaAnVzIAE"
         })
         try:
-            with urllib.request.urlopen(req, timeout=10) as response:
-                html = response.read().decode('utf-8')
-                real_url = response.geturl()
-        except Exception as e:
-            return {"error": f"Failed to connect to Google Photos: {e}"}
+    with urllib.request.urlopen(req, timeout=10) as response:
+        html = response.read().decode('utf-8')
+        real_url = response.geturl()
+
+        print("REAL URL:", real_url)
+
+        title_match = re.search(r'<title>(.*?)</title>', html)
+        title = title_match.group(1) if title_match else "No title"
+
+        print("TITLE:", title)
+        print("HTML PREVIEW:")
+        print(html[:5000])
+
+except Exception as e:
+    return {"error": f"Failed to connect to Google Photos: {e}"}
 
         # 1. Look for video download links
         video_urls = re.findall(r'https?://video-downloads\.googleusercontent\.com/[^\s"\'<>\\]+', html)
